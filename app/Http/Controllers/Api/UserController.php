@@ -29,8 +29,13 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request): UserResource
     {
-        echo "Hello";
         $user = User::create($request->all());
+        return new UserResource($user);
+    }
+
+    public function show($id): UserResource
+    {
+        $user = User::findOrFail($id);
         return new UserResource($user);
     }
 }
