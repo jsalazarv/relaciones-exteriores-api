@@ -28,22 +28,52 @@ class UserController extends Controller
        return UserResource::collection($users);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param StoreUserRequest $request
+     * @return UserResource
+     */
     public function store(StoreUserRequest $request): UserResource
     {
         $user = User::create($request->all());
         return new UserResource($user);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return UserResource
+     */
     public function show($id): UserResource
     {
         $user = User::findOrFail($id);
         return new UserResource($user);
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param UpdateUserRequest $request
+     * @param int $id
+     * @return UserResource
+     */
     public function update(UpdateUserRequest $request, $id): UserResource
     {
         $user = User::findOrFail($id);
         $user->update($request->all());
         return new UserResource($user);
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param $id
+     * @return void
+     */
+     public function destroy($id)
+     {
+        User::destroy($id);
+     }
 }
