@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\user\StoreUserRequest;
 use App\Http\Requests\user\UpdateUserRequest;
 use App\Http\Resources\UserResource;
+use App\Exports\UsersExport;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 /**
  * Class UserController
@@ -76,4 +78,13 @@ class UserController extends Controller
      {
         User::destroy($id);
      }
+
+    /**
+     * Export the users data to an Excel file.
+     */
+    public function export()
+    {
+        $filename = 'users_' . date('Ymd_His') . '.xlsx';
+        return Excel::download(new UsersExport, $filename);
+    }
 }
